@@ -48,6 +48,15 @@ let GameController = class GameController {
                 return color === update.color;
             }) === undefined)
             throw new Error("Invalid color");
+        if (update.board !== undefined) {
+            await entity_1.default.findOne(id).then(function (game2) {
+                const totalMoves = (board1, board2) => board1
+                    .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
+                    .reduce((a, b) => a.concat(b)).length;
+                if (totalMoves(JSON.parse(game2.board).rows, JSON.parse(update.board).rows) > 1)
+                    throw new Error("You're moving too much!");
+            });
+        }
         return entity_1.default.merge(game, update).save();
     }
 };

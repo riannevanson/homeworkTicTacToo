@@ -61,18 +61,22 @@ export default class GameController {
       throw new Error("Invalid color");
 
     // check if only 1 move is made ()
-    // if (update.board !== undefined) {
-    //   const game2 = game.rows;
-    //   const update2 = update.rows;
-    //   const totalMoves = (game2, update2) =>
-    //     game2
-    //       .map((row, y) => row.filter((cell, x) => update2[y][x] !== cell))
-    //       .reduce((a, b) => a.concat(b)).length;
+    if (update.board !== undefined) {
+      await Game.findOne(id).then(function(game2) {
+        const totalMoves = (board1, board2) =>
+          board1
+            .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
+            .reduce((a, b) => a.concat(b)).length;
 
-    //   if (totalMoves() > 1)
-    //     throw new Error("You're moving too much (" + totalMoves() + "x)!");
-    // }
-    // console.log("total moves", totalMoves);
+        if (
+          totalMoves(
+            JSON.parse(game2.board).rows,
+            JSON.parse(update.board).rows
+          ) > 1
+        )
+          throw new Error("You're moving too much!");
+      });
+    }
 
     return Game.merge(game, update).save();
   }
