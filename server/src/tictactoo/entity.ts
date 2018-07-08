@@ -14,11 +14,11 @@ enum colors {
 export default class Game extends BaseEntity {
   @PrimaryGeneratedColumn() id?: number;
 
-  @Column("text", { nullable: true })
+  @Column("text", { nullable: false })
   name: string;
 
   //@IsEnum(colors)
-  @Column("text", { nullable: true })
+  @Column("text", { nullable: false })
   color: string;
 
   @Column("json", { nullable: false })

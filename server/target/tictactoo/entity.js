@@ -26,11 +26,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Game.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column("text", { nullable: true }),
+    typeorm_1.Column("text", { nullable: false }),
     __metadata("design:type", String)
 ], Game.prototype, "name", void 0);
 __decorate([
-    typeorm_1.Column("text", { nullable: true }),
+    typeorm_1.Column("text", { nullable: false }),
     __metadata("design:type", String)
 ], Game.prototype, "color", void 0);
 __decorate([

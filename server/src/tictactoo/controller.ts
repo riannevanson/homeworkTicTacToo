@@ -13,6 +13,7 @@ import Game from "./entity";
 @JsonController()
 export default class GameController {
   @Get("/games/:id")
+  @HttpCode(418)
   getGame(@Param("id") id: number) {
     // resolved promise to console log the right interface
     Game.findOne(id).then(function(game) {
@@ -27,14 +28,14 @@ export default class GameController {
     return { games };
   }
 
-  @Post("/games/:name")
+  @Post("/games")
   @HttpCode(201)
-  createGame(@Param("name") name: string) {
-    const newGame = new Game();
+  createGame(@Body() input: Game) {
     const colors = ["red", "blue", "green", "yellow", "magenta"];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    const newGame = new Game();
     newGame.color = randomColor;
-    newGame.name = name; // aanpassen: user input via post ipv get
+    newGame.name = input.name;
     newGame.board =
       '{"rows":[\n\n' +
       '["o","o","o"],\n' +

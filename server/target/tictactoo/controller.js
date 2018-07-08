@@ -25,12 +25,12 @@ let GameController = class GameController {
         const games = await entity_1.default.find();
         return { games };
     }
-    createGame(name) {
-        const newGame = new entity_1.default();
+    createGame(input) {
         const colors = ["red", "blue", "green", "yellow", "magenta"];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const newGame = new entity_1.default();
         newGame.color = randomColor;
-        newGame.name = name;
+        newGame.name = input.name;
         newGame.board =
             '{"rows":[\n\n' +
                 '["o","o","o"],\n' +
@@ -53,6 +53,7 @@ let GameController = class GameController {
 };
 __decorate([
     routing_controllers_1.Get("/games/:id"),
+    routing_controllers_1.HttpCode(418),
     __param(0, routing_controllers_1.Param("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -65,11 +66,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "allGames", null);
 __decorate([
-    routing_controllers_1.Post("/games/:name"),
+    routing_controllers_1.Post("/games"),
     routing_controllers_1.HttpCode(201),
-    __param(0, routing_controllers_1.Param("name")),
+    __param(0, routing_controllers_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [entity_1.default]),
     __metadata("design:returntype", void 0)
 ], GameController.prototype, "createGame", null);
 __decorate([
